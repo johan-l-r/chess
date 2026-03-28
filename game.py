@@ -1,5 +1,5 @@
 import pygame as pg
-from board import Board
+from components.board import Board
 
 pg.init()
 
