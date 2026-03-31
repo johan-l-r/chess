@@ -1,4 +1,5 @@
 import pygame as pg
+from pieces.pawn import Pawn
 
 pg.init()
 
@@ -13,16 +14,23 @@ class Tile:
 
     self.color = ()
 
+    self.child = None 
+
     self.rect = pg.Rect(x, y, width, height)
 
-  def add(self): 
-    pass
+  def add(self, child: Pawn): 
+    self.child = child
 
-  def draw(self, master):
+  def is_empty(self):
+    return self.child is None
+
+  def draw(self, master): 
     pg.draw.rect(master, self.color, self.rect)
 
-  def set_color(self, color): 
-    self.color = color
+    if self.child: 
+      self.child.draw(master, self.x, self.y)
+
+  def set_color(self, color): self.color = color
 
   def get_row(self): return self.row
   def get_col(self): return self.col

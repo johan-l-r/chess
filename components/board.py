@@ -25,6 +25,14 @@ class Board:
           i, 
           j
         )
+        # testing (each tile has a pawn)
+        self.tile.add(
+          Pawn(
+            "./assets/imgs/pawn.png", 
+            self.tile_size, 
+            self.tile_size
+          )
+        )
         row.append(self.tile)
 
       self.coordinates.append(row)
