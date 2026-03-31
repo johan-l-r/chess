@@ -1,6 +1,7 @@
 import pygame as pg 
 
 from components.tile import Tile
+from pieces.pawn import Pawn
 
 pg.init()
 
@@ -21,18 +22,19 @@ class Board:
           self.tile_size,
           i * self.tile_size, 
           j * self.tile_size, 
-          (i + j)
+          i, 
+          j
         )
         row.append(self.tile)
-        self.coordinates.append(row)
+
+      self.coordinates.append(row)
 
   def draw(self, master: pg.Surface): 
     for row in self.coordinates:
       for tile in row: 
-        if tile.get_coordinate() % 2 != 0:
-          tile.set_color((0, 0, 0))
-        else:
+        if (tile.get_row() + tile.get_col()) % 2 != 0:
           tile.set_color((255, 255, 255))
-
+        else:
+          tile.set_color((0, 0, 0))
 
         tile.draw(master)

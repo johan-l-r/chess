@@ -3,15 +3,20 @@ import pygame as pg
 pg.init()
 
 class Tile: 
-  def __init__(self, width, height, x, y, coordinate):
+  def __init__(self, width, height, x, y, row, col):
     self.width = width
     self.height = height
     self.x = x
     self.y = y
-    self.coordinate  = coordinate
-    self.color = (255, 255, 255)
+    self.row = row
+    self.col = col
+
+    self.color = ()
 
     self.rect = pg.Rect(x, y, width, height)
+
+  def add(self): 
+    pass
 
   def draw(self, master):
     pg.draw.rect(master, self.color, self.rect)
@@ -19,4 +24,5 @@ class Tile:
   def set_color(self, color): 
     self.color = color
 
-  def get_coordinate(self): return self.coordinate
+  def get_row(self): return self.row
+  def get_col(self): return self.col
