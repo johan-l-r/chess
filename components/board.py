@@ -20,8 +20,8 @@ class Board:
         self.tile = Tile(
           self.tile_size, 
           self.tile_size,
+          j * self.tile_size,  
           i * self.tile_size, 
-          j * self.tile_size, 
           i, 
           j
         )
@@ -42,7 +42,7 @@ class Board:
   def draw(self, master: pg.Surface): 
     for row in self.coordinates:
       for tile in row: 
-        if (tile.get_row() + tile.get_col()) % 2 != 0:
+        if (tile.get_row() + tile.get_col()) % 2 == 0:
           tile.set_color((242, 212, 148))
         else:
           tile.set_color((107, 77, 12))
