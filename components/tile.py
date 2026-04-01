@@ -1,5 +1,5 @@
 import pygame as pg
-from pieces.pawn import Pawn
+from base.piece import Piece
 
 pg.init()
 
@@ -18,7 +18,7 @@ class Tile:
 
     self.rect = pg.Rect(x, y, width, height)
 
-  def add(self, child: Pawn): 
+  def add(self, child: Piece): 
     self.child = child
 
   def is_empty(self):
@@ -34,3 +34,5 @@ class Tile:
 
   def get_row(self): return self.row
   def get_col(self): return self.col
+  def get_rect(self): return self.rect
+  

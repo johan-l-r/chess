@@ -21,6 +21,8 @@ class Game:
         if e.type == pg.QUIT: 
           self.running = False
 
+        self.board.handle_event(e)
+
       self.board.draw(self.window)
 
       pg.display.flip()

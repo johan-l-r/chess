@@ -25,24 +25,26 @@ class Board:
           i, 
           j
         )
-        # testing (each tile has a pawn)
-        self.tile.add(
-          Pawn(
-            "./assets/imgs/pawn.png", 
-            self.tile_size, 
-            self.tile_size
-          )
-        )
         row.append(self.tile)
 
       self.coordinates.append(row)
+
+  def handle_event(self, event):
+    if event.type == pg.MOUSEBUTTONDOWN:
+      mouse_pos = pg.mouse.get_pos()
+
+      for row in self.coordinates:
+        for tile in row: 
+          if tile.get_rect().collidepoint(mouse_pos):
+            # testing
+            print(f"row {tile.get_row()} col {tile.get_col()}")
 
   def draw(self, master: pg.Surface): 
     for row in self.coordinates:
       for tile in row: 
         if (tile.get_row() + tile.get_col()) % 2 != 0:
-          tile.set_color((255, 255, 255))
+          tile.set_color((242, 212, 148))
         else:
-          tile.set_color((0, 0, 0))
+          tile.set_color((107, 77, 12))
 
         tile.draw(master)
