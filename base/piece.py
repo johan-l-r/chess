@@ -8,6 +8,9 @@ class Piece(ABC):
     self.image = pg.image.load(path)
     self.image = pg.transform.scale(self.image, (width, height))
 
+  @abstractmethod
+  def move(self, current_row, current_col, target_row, target_col) -> bool: pass
+
   def draw(self, master: pg.Surface, x, y):
     master.blit(self.image, (x, y))
 

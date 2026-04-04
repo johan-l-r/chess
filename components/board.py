@@ -37,12 +37,18 @@ class Board:
 
       self.coordinates.append(row)
 
-    self.coordinates[0][7].add_child(self.pawn)
+    self.coordinates[6][0].add_child(self.pawn)
 
-  def move_piece(self, current_tile, target_tile): 
+  def move_piece(self, current_tile: Tile, target_tile: Tile): 
     if target_tile.is_empty(): 
-      target_tile.add_child(current_tile.get_child())
-      current_tile.remove_child()
+      if current_tile.get_child().move(
+        current_tile.get_row(), 
+        current_tile.get_col(), 
+        target_tile.get_row(), 
+        target_tile.get_col()
+      ):
+        target_tile.add_child(current_tile.get_child())
+        current_tile.remove_child()
 
   def handle_clicked_tile(self, tile): 
     if self.selected_tile is None:  

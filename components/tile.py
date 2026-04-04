@@ -41,7 +41,7 @@ class Tile:
 
   def set_color(self, color): self.color = color
 
-  def get_child(self): return self.child
+  def get_child(self) -> Piece: return self.child
   def get_row(self): return self.row
   def get_col(self): return self.col
   def get_rect(self): return self.rect
