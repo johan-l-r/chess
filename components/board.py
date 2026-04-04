@@ -14,13 +14,14 @@ class Board:
     self.selected_tile = None
 
     self.coordinates = []
+    self.possible_moves = []
 
     # fill matrix with coordinates
     for i in range(self.MAX_TILES): 
       row = []
 
       for j in range(self.MAX_TILES): 
-        self.tile = Tile(
+        tile = Tile(
           self.tile_size, 
           self.tile_size,
           j * self.tile_size,  
@@ -28,7 +29,13 @@ class Board:
           i, 
           j
         )
-        row.append(self.tile)
+        row.append(tile)
+
+        # set color one time
+        if (tile.get_row() + tile.get_col()) % 2 == 0:
+          tile.set_color((242, 212, 148))
+        else:
+          tile.set_color((107, 77, 12))
 
       self.coordinates.append(row)
 
@@ -37,7 +44,7 @@ class Board:
       self.tile_size, 
       self.tile_size
     ))
-    self.coordinates[1][0].add_child(Pawn(
+    self.coordinates[5][0].add_child(Pawn(
       "./assets/imgs/pawn.png", 
       self.tile_size, 
       self.tile_size
@@ -53,14 +60,14 @@ class Board:
     target_tile.add_child(current_tile.get_child())
     current_tile.remove_child()
 
+
   def handle_clicked_tile(self, tile): 
     if self.selected_tile is None:  
       if not tile.is_empty(): 
         self.selected_tile = tile
-
     else:
       piece = self.selected_tile.get_child()
-      moves = piece.get_possible_moves(
+      self.possible_moves = piece.get_possible_moves(
         self,
         self.selected_tile.get_row(), 
         self.selected_tile.get_col()
@@ -68,7 +75,7 @@ class Board:
 
       target = (tile.get_row(), tile.get_col())
 
-      if target in moves: 
+      if target in self.possible_moves: 
         self.move_piece(self.selected_tile, tile)
 
       self.selected_tile = None
@@ -85,9 +92,4 @@ class Board:
   def draw(self, master: pg.Surface): 
     for row in self.coordinates:
       for tile in row: 
-        if (tile.get_row() + tile.get_col()) % 2 == 0:
-          tile.set_color((242, 212, 148))
-        else:
-          tile.set_color((107, 77, 12))
-
         tile.draw(master)
