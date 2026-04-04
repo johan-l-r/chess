@@ -9,19 +9,16 @@ class Pawn(Piece):
     
     self.is_first_move = True
 
-  def move(self, current_row, current_col, target_row, target_col) -> bool:
-    super().move(current_row, current_col, target_row, target_col)
+  def get_possible_moves(self, board, row, col):
+    super().get_possible_moves(board, row, col)
 
-    # only move vertically
-    if target_col != current_col: 
-      return False
+    moves = []
     
-    if target_row == current_row - 1: 
-      self.is_first_move = False
-      return True
+    if board.is_target_empty(row - 1, col):
+      moves.append((row - 1, col))
 
-    if target_row == current_row - 2 and self.is_first_move: 
-      self.is_first_move = False
-      return True
+      if board.is_target_empty(row - 2, col) and self.is_first_move:
+        moves.append((row - 2, col))
+        self.is_first_move = False
 
-    return False
+    return moves 
