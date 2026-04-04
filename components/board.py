@@ -10,6 +10,14 @@ class Board:
     self.tile_size = 64
     self.MAX_TILES = 8
 
+    self.pawn = Pawn(
+      "./assets/imgs/pawn.png", 
+      self.tile_size, 
+      self.tile_size
+    )
+
+    self.selected_tile = None
+
     self.coordinates = []
 
     # fill matrix with coordinates
@@ -29,15 +37,30 @@ class Board:
 
       self.coordinates.append(row)
 
-  def handle_event(self, event):
-    if event.type == pg.MOUSEBUTTONDOWN:
-      mouse_pos = pg.mouse.get_pos()
+    self.coordinates[0][7].add_child(self.pawn)
 
-      for row in self.coordinates:
+  def move_piece(self, current_tile, target_tile): 
+    if target_tile.is_empty(): 
+      target_tile.add_child(current_tile.get_child())
+      current_tile.remove_child()
+
+  def handle_clicked_tile(self, tile): 
+    if self.selected_tile is None:  
+      if not tile.is_empty(): 
+        self.selected_tile = tile
+
+    else:
+      self.move_piece(self.selected_tile, tile)
+      self.selected_tile = None
+
+  def handle_event(self, event):
+    if event.type == pg.MOUSEBUTTONDOWN: 
+      mouse_pos = pg.mouse.get_pos() 
+
+      for row in self.coordinates: 
         for tile in row: 
-          if tile.get_rect().collidepoint(mouse_pos):
-            # testing
-            print(f"row {tile.get_row()} col {tile.get_col()}")
+          if tile.is_clicked(mouse_pos): 
+            self.handle_clicked_tile(tile)
 
   def draw(self, master: pg.Surface): 
     for row in self.coordinates:
