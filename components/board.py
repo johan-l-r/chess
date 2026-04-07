@@ -31,12 +31,6 @@ class Board:
         )
         row.append(tile)
 
-        # set color one time
-        if (tile.get_row() + tile.get_col()) % 2 == 0:
-          tile.set_color((242, 212, 148))
-        else:
-          tile.set_color((107, 77, 12))
-
       self.coordinates.append(row)
 
     self.coordinates[6][0].add_child(Pawn(
@@ -50,6 +44,17 @@ class Board:
       self.tile_size
     ))
 
+    self.color_board()
+
+  def color_board(self): 
+    for row in self.coordinates: 
+      for tile in row: 
+        # set color one time
+        if (tile.get_row() + tile.get_col()) % 2 == 0:
+          tile.set_color((242, 212, 148))
+        else:
+          tile.set_color((107, 77, 12))
+
   def is_target_empty(self, row, col): 
     if self.coordinates[row][col].is_empty():
       return True 
@@ -60,25 +65,27 @@ class Board:
     target_tile.add_child(current_tile.get_child())
     current_tile.remove_child()
 
-
   def handle_clicked_tile(self, tile): 
     if self.selected_tile is None:  
       if not tile.is_empty(): 
+        # select tile and calculate moves
         self.selected_tile = tile
-    else:
-      piece = self.selected_tile.get_child()
-      self.possible_moves = piece.get_possible_moves(
-        self,
-        self.selected_tile.get_row(), 
-        self.selected_tile.get_col()
-      )
 
+        piece = self.selected_tile.get_child()
+
+        self.possible_moves = piece.get_possible_moves(
+          self,
+          self.selected_tile.get_row(), 
+          self.selected_tile.get_col()
+        )
+    else:
       target = (tile.get_row(), tile.get_col())
 
       if target in self.possible_moves: 
         self.move_piece(self.selected_tile, tile)
 
       self.selected_tile = None
+      self.possible_moves = []
 
   def handle_event(self, event):
     if event.type == pg.MOUSEBUTTONDOWN: 
