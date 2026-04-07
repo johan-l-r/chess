@@ -38,7 +38,7 @@ class Board:
       self.tile_size, 
       self.tile_size
     ))
-    self.coordinates[5][0].add_child(Pawn(
+    self.coordinates[6][1].add_child(Pawn(
       "./assets/imgs/pawn.png", 
       self.tile_size, 
       self.tile_size
@@ -89,6 +89,19 @@ class Board:
           self.selected_tile.get_col()
         )
     else:
+      if not tile.is_empty(): 
+        # if another piece is clicked then reselect tile
+        self.selected_tile = tile
+
+        piece = tile.get_child()
+
+        self.possible_moves = piece.get_possible_moves(
+          self,
+          tile.get_row(), 
+          tile.get_col()
+        )
+        return 
+
       target = (tile.get_row(), tile.get_col())
 
       if target in self.possible_moves: 
