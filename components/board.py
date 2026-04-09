@@ -62,14 +62,12 @@ class Board:
     return False
 
   def highlight_moves(self): 
-    if self.selected_tile is not None: 
-      for row, col in self.possible_moves: 
-        if (row + col) % 2 == 0: 
-          self.coordinates[row][col].set_color((52, 235, 125))
-        else: 
-          self.coordinates[row][col].set_color((35, 166, 87))
-    else: 
-      self.color_board()
+    self.color_board()
+    for row, col in self.possible_moves: 
+      if (row + col) % 2 == 0: 
+        self.coordinates[row][col].set_color((52, 235, 125))
+      else: 
+        self.coordinates[row][col].set_color((35, 166, 87))
 
   def move_piece(self, current_tile: Tile, target_tile: Tile): 
     target_tile.add_child(current_tile.get_child())
@@ -100,7 +98,7 @@ class Board:
           tile.get_row(), 
           tile.get_col()
         )
-        return 
+        return
 
       target = (tile.get_row(), tile.get_col())
 
@@ -110,8 +108,6 @@ class Board:
       self.selected_tile = None
       self.possible_moves = []
 
-    self.highlight_moves()
-
   def handle_event(self, event):
     if event.type == pg.MOUSEBUTTONDOWN: 
       mouse_pos = pg.mouse.get_pos() 
@@ -120,6 +116,9 @@ class Board:
         for tile in row: 
           if tile.is_clicked(mouse_pos): 
             self.handle_clicked_tile(tile)
+
+  def update(self): 
+    self.highlight_moves()
 
   def draw(self, master: pg.Surface): 
     for row in self.coordinates:
