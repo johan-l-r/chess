@@ -9,7 +9,7 @@ class Pawn(Piece):
     
     self.is_first_move = True
 
-  def get_possible_moves(self, board, row, col):
+  def get_possible_moves(self, board, row, col) -> list:
     super().get_possible_moves(board, row, col)
 
     moves = []
