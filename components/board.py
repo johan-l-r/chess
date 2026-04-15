@@ -1,7 +1,9 @@
+from os import truncate
 import pygame as pg 
 
 from components.tile import Tile
 from pieces.pawn import Pawn
+from pieces.knight import Knight
 
 pg.init()
 
@@ -42,7 +44,12 @@ class Board:
       "./assets/imgs/pawn.png", 
       self.tile_size, 
       self.tile_size, 
-      6
+      5
+    ))
+    self.coordinates[7][1].add_child(Knight(
+      "./assets/imgs/knight.png", 
+      self.tile_size, 
+      self.tile_size
     ))
 
     self.color_board()
@@ -58,6 +65,13 @@ class Board:
 
   def is_target_empty(self, row, col): 
     return self.coordinates[row][col].is_empty()
+
+  def is_valid_position(self, row, col): 
+    if row >= 0 and col >= 0 and \
+      row < self.MAX_TILES and col < self.MAX_TILES:
+      return True 
+
+    return False 
 
   def highlight_moves(self): 
     self.color_board()
