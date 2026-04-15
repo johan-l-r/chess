@@ -12,19 +12,13 @@ class Pawn(Piece):
   def get_possible_moves(self, board, row, col) -> list:
     super().get_possible_moves(board, row, col)
 
-    moves = [
-      (row - 1, col), 
-      (row - 2, col) # two tiles movement
-    ]
-
-    # if initial position changed then remove two tile movement
-    if self.original_row != row: 
-      moves.remove((row - 2, col))
-
     valid_moves = []
-    
-    for row, col in moves: 
-      if board.is_target_empty(row, col): 
-        valid_moves.append((row, col))
+
+    # prevent piece jumping
+    if board.is_target_empty(row - 1, col):
+      valid_moves.append((row - 1, col))
+      
+      if board.is_target_empty(row - 2, col) and self.original_row == row: 
+        valid_moves.append((row - 2, col))
 
     return valid_moves
