@@ -35,12 +35,14 @@ class Board:
     self.coordinates[6][0].add_child(Pawn(
       "./assets/imgs/pawn.png", 
       self.tile_size, 
-      self.tile_size
+      self.tile_size, 
+      6
     ))
     self.coordinates[6][1].add_child(Pawn(
       "./assets/imgs/pawn.png", 
       self.tile_size, 
-      self.tile_size
+      self.tile_size, 
+      6
     ))
 
     self.color_board()
@@ -55,10 +57,7 @@ class Board:
           tile.set_color((107, 77, 12))
 
   def is_target_empty(self, row, col): 
-    if self.coordinates[row][col].is_empty():
-      return True 
-
-    return False
+    return self.coordinates[row][col].is_empty()
 
   def highlight_moves(self): 
     self.color_board()
