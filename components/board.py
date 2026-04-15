@@ -8,9 +8,13 @@ from pieces.knight import Knight
 pg.init()
 
 class Board: 
-  def __init__(self): 
+  def __init__(self, window_width, window_height): 
     self.tile_size = 64
     self.MAX_TILES = 8
+    self.BOARD_SIZE = self.tile_size * self.MAX_TILES
+
+    self.center_x = (window_width - self.BOARD_SIZE) // 2
+    self.center_y = (window_height - self.BOARD_SIZE) // 2
 
     self.selected_tile = None
 
@@ -25,8 +29,8 @@ class Board:
         tile = Tile(
           self.tile_size, 
           self.tile_size,
-          j * self.tile_size,  
-          i * self.tile_size, 
+          j * self.tile_size + self.center_x, 
+          i * self.tile_size + self.center_y, 
           i, 
           j
         )

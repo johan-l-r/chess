@@ -8,7 +8,7 @@ class Game:
     self.WINDOW_WIDTH = 720
     self.WINDOW_HEIGHT = 720
 
-    self.board = Board() 
+    self.board = Board(self.WINDOW_WIDTH, self.WINDOW_HEIGHT) 
     self.window = pg.display.set_mode((self.WINDOW_WIDTH, self.WINDOW_HEIGHT))
 
     self.running = False
@@ -22,6 +22,8 @@ class Game:
           self.running = False
 
         self.board.handle_event(e)
+
+      self.window.fill((252, 232, 204))
 
       self.board.update()
       self.board.draw(self.window)
