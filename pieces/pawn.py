@@ -9,10 +9,11 @@ class Pawn(Piece):
     
     self.original_row = original_row
 
-  def get_possible_moves(self, board, row, col) -> list:
-    super().get_possible_moves(board, row, col)
+  def get_moves(self, board, row, col) -> tuple:
+    super().get_moves(board, row, col)
 
     valid_moves = []
+    invalid_moves = []
 
     # prevent piece jumping
     if board.is_target_empty(row - 1, col):
@@ -20,5 +21,9 @@ class Pawn(Piece):
       
       if board.is_target_empty(row - 2, col) and self.original_row == row: 
         valid_moves.append((row - 2, col))
+      else:
+        invalid_moves.append((row - 2, col))
+    else:
+      invalid_moves.append((row - 1, col))
 
-    return valid_moves
+    return valid_moves, invalid_moves
