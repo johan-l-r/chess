@@ -84,7 +84,11 @@ class Board:
     self.hilight.clear_hilights()
     self.selected_tile = tile
 
+    if tile is None: 
+      return
+
     piece = tile.get_child()
+
 
     self.hilight.create_highlights(
       self, 
@@ -102,7 +106,6 @@ class Board:
   def handle_clicked_tile(self, tile): 
     if self.selected_tile is None:  
       if not tile.is_empty(): 
-        # select tile and calculate moves
         self.select_tile(tile)
     else:
       if not tile.is_empty(): 
@@ -113,12 +116,16 @@ class Board:
 
       target = (tile.get_row(), tile.get_col())
 
+      # deselect tile if target is not a possible move
+      if tile.is_empty() and target not in self.possible_moves: 
+        self.select_tile(None)
+
       if target in self.possible_moves: 
         self.move_piece(self.selected_tile, tile)
 
       self.selected_tile = None
       self.possible_moves = []
-      self.hilight.clear_hilights()
+      self.hilight.clear_hilights() # clear highlight list after piece movement
 
   def handle_event(self, event):
     if event.type == pg.MOUSEBUTTONDOWN: 
@@ -128,9 +135,6 @@ class Board:
         for tile in row: 
           if tile.is_clicked(mouse_pos): 
             self.handle_clicked_tile(tile)
-
-  def update(self): 
-    pass
 
   def draw(self, master: pg.Surface): 
     for row in self.coordinates:
