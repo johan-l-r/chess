@@ -9,7 +9,7 @@ class Piece(ABC):
     self.image = pg.transform.scale(self.image, (width, height))
 
   @abstractmethod
-  def get_possible_moves(self, board, row, col) -> list: pass
+  def get_moves(self, board, row, col) -> tuple: pass
 
   def draw(self, master: pg.Surface, x, y):
     master.blit(self.image, (x, y))

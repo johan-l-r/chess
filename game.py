@@ -23,9 +23,8 @@ class Game:
 
         self.board.handle_event(e)
 
-      self.window.fill((252, 232, 204))
+      self.window.fill((77, 71, 60))
 
-      self.board.update()
       self.board.draw(self.window)
 
       pg.display.flip()
