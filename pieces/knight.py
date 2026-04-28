@@ -21,6 +21,7 @@ class Knight(Piece):
     
     valid_moves = []
     invalid_moves = []
+    capture_moves = []
 
     for row, col in moves: 
       # prevent out of range movement
@@ -28,4 +29,8 @@ class Knight(Piece):
         if board.is_target_empty(row, col):
           valid_moves.append((row, col))
 
-    return valid_moves, invalid_moves
+      if board.is_valid_position(row, col): 
+        if not board.is_target_empty(row, col):
+          capture_moves.append((row, col))
+
+    return valid_moves, invalid_moves, capture_moves

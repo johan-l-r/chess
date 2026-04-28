@@ -14,6 +14,13 @@ class Pawn(Piece):
 
     valid_moves = []
     invalid_moves = []
+    capture_moves = []
+
+    # capture logic
+    if not board.is_target_empty(row - 1, col + 1): 
+      capture_moves.append((row - 1, col + 1))
+    if not board.is_target_empty(row - 1, col - 1): 
+      capture_moves.append((row - 1, col - 1))
 
     # prevent piece jumping
     if board.is_target_empty(row - 1, col):
@@ -26,4 +33,4 @@ class Pawn(Piece):
     else:
       invalid_moves.append((row - 1, col))
 
-    return valid_moves, invalid_moves
+    return valid_moves, invalid_moves, capture_moves

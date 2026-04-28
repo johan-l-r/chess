@@ -16,8 +16,7 @@ class Highlight:
     self.highlights = []
 
   def create_highlights(self, board, row, col, piece): 
-    valid_moves = piece.get_moves(board, row, col)[0]
-    invalid_moves = piece.get_moves(board, row, col)[1]
+    valid_moves, invalid_moves, capture_moves = piece.get_moves(board, row, col)
 
     for row, col in valid_moves:
       tile = pg.Surface(
@@ -28,9 +27,18 @@ class Highlight:
       tile.fill(self.VALID_MOVE)
       self.highlights.append((row, col, tile))
 
+    for row, col in capture_moves: 
+      tile = pg.Surface(
+        (self.tile_size, self.tile_size), 
+        pg.SRCALPHA
+      )
+
+      tile.fill(self.CAPTURE_MOVE)
+      self.highlights.append((row, col, tile))
+
   def clear_hilights(self): self.highlights.clear()
 
-  def draw(self, master): 
+  def draw(self, master, center_x, center_y): 
     for row, col, hint in self.highlights: 
-      master.blit(hint, (col * self.tile_size, row * self.tile_size))
+      master.blit(hint, (col * self.tile_size + center_x, row * self.tile_size + center_y))
 

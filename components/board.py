@@ -9,9 +9,13 @@ from pieces.knight import Knight
 pg.init()
 
 class Board: 
-  def __init__(self): 
+  def __init__(self, window_width, window_height): 
     self.tile_size = 64
     self.MAX_TILES = 8
+    self.BOARD_SIZE = self.tile_size * self.MAX_TILES
+
+    self.center_x = (window_width - self.BOARD_SIZE) // 2
+    self.center_y = (window_height - self.BOARD_SIZE) // 2
 
     self.selected_tile = None
 
@@ -28,8 +32,8 @@ class Board:
         tile = Tile(
           self.tile_size, 
           self.tile_size,
-          j * self.tile_size,  
-          i * self.tile_size, 
+          j * self.tile_size + self.center_x, 
+          i * self.tile_size + self.center_y, 
           i, 
           j
         )
@@ -38,6 +42,12 @@ class Board:
       self.coordinates.append(row)
 
     self.coordinates[6][0].add_child(Pawn(
+      "./assets/imgs/pawn.png", 
+      self.tile_size, 
+      self.tile_size, 
+      6
+    ))
+    self.coordinates[5][1].add_child(Pawn(
       "./assets/imgs/pawn.png", 
       self.tile_size, 
       self.tile_size, 
@@ -62,9 +72,9 @@ class Board:
       for tile in row: 
         # set color one time
         if (tile.get_row() + tile.get_col()) % 2 == 0:
-          tile.set_color((242, 212, 148))
+          tile.set_color((131, 122, 105))
         else:
-          tile.set_color((107, 77, 12))
+          tile.set_color((179, 170, 153))
 
   def is_target_empty(self, row, col): 
     return self.coordinates[row][col].is_empty()
@@ -141,5 +151,5 @@ class Board:
       for tile in row: 
         tile.draw(master)
 
-    self.hilight.draw(master)
+    self.hilight.draw(master, self.center_x, self.center_y)
 
