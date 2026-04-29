@@ -23,6 +23,7 @@ class Board:
 
     self.coordinates = []
     self.possible_moves = []
+    self.captured_pieces = []
 
     # fill matrix with coordinates
     for i in range(self.MAX_TILES): 
@@ -42,25 +43,25 @@ class Board:
       self.coordinates.append(row)
 
     self.coordinates[6][0].add_child(Pawn(
-      "./assets/imgs/pawn.png", 
+      "./assets/imgs/pawn.svg", 
       self.tile_size, 
       self.tile_size, 
       6
     ))
     self.coordinates[5][1].add_child(Pawn(
-      "./assets/imgs/pawn.png", 
+      "./assets/imgs/pawn.svg", 
       self.tile_size, 
       self.tile_size, 
       6
     ))
     self.coordinates[6][1].add_child(Pawn(
-      "./assets/imgs/pawn.png", 
+      "./assets/imgs/pawn.svg", 
       self.tile_size, 
       self.tile_size, 
       5
     ))
     self.coordinates[7][1].add_child(Knight(
-      "./assets/imgs/knight.png", 
+      "./assets/imgs/knight.svg", 
       self.tile_size, 
       self.tile_size
     ))
@@ -99,7 +100,6 @@ class Board:
 
     piece = tile.get_child()
 
-
     self.hilight.create_highlights(
       self, 
       tile.get_row(), 
@@ -111,29 +111,38 @@ class Board:
       self, 
       tile.get_row(), 
       tile.get_col()
-    )[0]
+    )[0] + piece.get_moves(
+      self, 
+      tile.get_row(), 
+      tile.get_col()
+    )[2]
 
   def handle_clicked_tile(self, tile): 
     if self.selected_tile is None:  
       if not tile.is_empty(): 
         self.select_tile(tile)
     else:
-      if not tile.is_empty(): 
-        # if another piece is clicked then reselect tile
-        self.select_tile(tile)
-
-        return
-
       target = (tile.get_row(), tile.get_col())
 
       # deselect tile if target is not a possible move
       if tile.is_empty() and target not in self.possible_moves: 
         self.select_tile(None)
 
+      # reselect piece
+      if not tile.is_empty() and target not in self.possible_moves: 
+        self.select_tile(tile)
+
+        return 
+
       if target in self.possible_moves: 
+        # store captured pieces 
+        if not tile.is_empty(): 
+          self.captured_pieces.append(tile.get_child())
+
         self.move_piece(self.selected_tile, tile)
 
       self.selected_tile = None
+
       self.possible_moves = []
       self.hilight.clear_hilights() # clear highlight list after piece movement
 

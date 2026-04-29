@@ -7,9 +7,9 @@ pg.init()
 class Highlight: 
   def __init__(self, hint_size): 
     # semitransparent colors
-    self.VALID_MOVE = (52, 235, 125, 128)
+    self.VALID_MOVE = (22, 128, 46, 128)
     self.INVALID_MOVE = (107, 107, 107, 128)
-    self.CAPTURE_MOVE = (161, 14, 14, 128)
+    self.CAPTURE_MOVE = (196, 64, 27, 128)
 
     self.tile_size = hint_size
 
