@@ -1,10 +1,10 @@
-from os import truncate
 import pygame as pg 
 
 from components.tile import Tile
 from highlight import Highlight
 from pieces.pawn import Pawn
 from pieces.knight import Knight
+from pieces.rook import Rook
 
 pg.init()
 
@@ -62,6 +62,11 @@ class Board:
     ))
     self.coordinates[7][1].add_child(Knight(
       "./assets/imgs/knight.svg", 
+      self.tile_size, 
+      self.tile_size
+    ))
+    self.coordinates[3][3].add_child(Rook(
+      "./assets/imgs/roock.svg", 
       self.tile_size, 
       self.tile_size
     ))

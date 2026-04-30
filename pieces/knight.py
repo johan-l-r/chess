@@ -28,9 +28,7 @@ class Knight(Piece):
       if board.is_valid_position(row, col): 
         if board.is_target_empty(row, col):
           valid_moves.append((row, col))
-
-      if board.is_valid_position(row, col): 
-        if not board.is_target_empty(row, col):
+        else:
           capture_moves.append((row, col))
 
     return valid_moves, invalid_moves, capture_moves
