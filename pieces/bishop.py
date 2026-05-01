@@ -1,6 +1,6 @@
 from base.piece import Piece
 
-class Rook(Piece): 
+class Bishop(Piece): 
   def __init__(self, path, width, height):
     super().__init__(path, width, height)
 
@@ -10,38 +10,10 @@ class Rook(Piece):
     valid_moves = []
     invalid_moves = []
     capture_moves = []
-    
-    # down
-    for i in range(1, 8): 
-      r = row + i
-      c = col
 
-      if not board.is_valid_position(r, c): 
-        break
-
-      if board.is_target_empty(r, c): 
-        valid_moves.append((r, c))
-      else:
-        capture_moves.append((r, c))
-        break
-
-    # up
+    # top right
     for i in range(1, 8): 
       r = row - i
-      c = col
-
-      if not board.is_valid_position(r, c): 
-        break
-
-      if board.is_target_empty(r, c): 
-        valid_moves.append((r, c))
-      else:
-        capture_moves.append((r, c))
-        break
-
-    # right
-    for i in range(1, 8): 
-      r = row
       c = col + i
 
       if not board.is_valid_position(r, c): 
@@ -53,10 +25,38 @@ class Rook(Piece):
         capture_moves.append((r, c))
         break
 
-    # left
+    # bottom left 
     for i in range(1, 8): 
-      r = row
+      r = row + i
       c = col - i
+
+      if not board.is_valid_position(r, c): 
+        break
+
+      if board.is_target_empty(r, c): 
+        valid_moves.append((r, c))
+      else:
+        capture_moves.append((r, c))
+        break
+
+    # top left
+    for i in range(1, 8): 
+      r = row - i
+      c = col - i
+
+      if not board.is_valid_position(r, c): 
+        break
+
+      if board.is_target_empty(r, c): 
+        valid_moves.append((r, c))
+      else:
+        capture_moves.append((r, c))
+        break
+
+    # bottom right
+    for i in range(1, 8): 
+      r = row + i 
+      c = col + i
 
       if not board.is_valid_position(r, c): 
         break
